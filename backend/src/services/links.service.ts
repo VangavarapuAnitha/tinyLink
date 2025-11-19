@@ -1,5 +1,5 @@
 import { pool } from "../db";
-import { PostProps } from "../types/links.type";
+import { PathProps, PostProps } from "../types/links.type";
 
 export const postService = async ({ target_url, code }: PostProps) => {
   console.log(target_url, code);
@@ -23,6 +23,48 @@ export const postService = async ({ target_url, code }: PostProps) => {
         },
       };
     }
+    //Unexpected error
+    return {
+      success: false,
+      error: {
+        code: 500,
+        message: "Internal server error",
+      },
+    };
+  }
+};
+
+// Service to get redirect url
+export const getRedirectURL = async ({ code }: PathProps) => {
+  try {
+    const query = `select target_url from links where code=$1`;
+    const result = await pool.query(query, [code]);
+    return {
+      success: true,
+      data: result.rows[0].target_url,
+    };
+  } catch (error) {
+    //Unexpected error
+    return {
+      success: false,
+      error: {
+        code: 500,
+        message: "Internal server error",
+      },
+    };
+  }
+};
+
+// Service to delete url with code
+export const deleteURL = async ({ code }: PathProps) => {
+  try {
+    const query = `delete from links where code=$1`;
+    await pool.query(query, [code]);
+    return {
+      success: true,
+      message: "Deleted!",
+    };
+  } catch (error) {
     //Unexpected error
     return {
       success: false,

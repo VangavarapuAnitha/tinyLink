@@ -1,7 +1,8 @@
 import { Response, NextFunction } from "express";
 import { CustomRequest } from "../types/links.type";
-import { postSchema } from "../schemas/links.schema";
+import { getOrDeleteSchema, postSchema } from "../schemas/links.schema";
 import Joi from "joi";
+import { pool } from "../db";
 
 export const linksValidation = async (
   req: CustomRequest,
@@ -15,6 +16,23 @@ export const linksValidation = async (
       });
       console.log(value);
       req.postBody = value;
+    } else if (req.method === "GET" || req.method === "DELETE") {
+      //Validate path params
+      const value = await getOrDeleteSchema.validateAsync(req.params, {
+        abortEarly: false,
+      });
+      req.getOrDeletePath = value;
+
+      //Check for code existence
+      const { code } = value;
+      const checkQuery = `select 1 from links where code=$1`;
+      const result = await pool.query(checkQuery, [code]);
+      if (result.rows.length === 0) {
+        return res.status(404).json({
+          status: "not_found",
+          message: "No record found with provided code",
+        });
+      }
     }
 
     next(); //Proceed with controllers
