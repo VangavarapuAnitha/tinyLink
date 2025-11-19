@@ -2,6 +2,7 @@ import {
   postService,
   getRedirectURL,
   deleteURL,
+  getLinks,
 } from "../services/links.service";
 import { CustomRequest } from "../types/links.type";
 import { Response } from "express";
@@ -37,4 +38,13 @@ export const deleteController = async (req: CustomRequest, res: Response) => {
     return res.status(result.error?.code as number).json(result.error?.message);
   }
   return res.status(200).json(result.message);
+};
+
+// GET all links data
+export const getLinksController = async (req: CustomRequest, res: Response) => {
+  const result = await getLinks();
+  if (!result.success) {
+    return res.status(result.error?.code as number).json(result.error?.message);
+  }
+  return res.status(200).json(result.data);
 };

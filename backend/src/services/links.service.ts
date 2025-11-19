@@ -75,3 +75,24 @@ export const deleteURL = async ({ code }: PathProps) => {
     };
   }
 };
+
+// Get all links
+export const getLinks = async () => {
+  try {
+    const query = `select code,target_url,clicks,last_clicked from links`;
+    const result = await pool.query(query);
+    return {
+      success: true,
+      data: result.rows,
+    };
+  } catch (error) {
+    //Unexpected error
+    return {
+      success: false,
+      error: {
+        code: 500,
+        message: "Internal server error",
+      },
+    };
+  }
+};
