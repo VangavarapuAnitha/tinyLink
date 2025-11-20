@@ -29,7 +29,6 @@ export const linksValidation = async (
       const result = await pool.query(checkQuery, [code]);
       if (result.rows.length === 0) {
         return res.status(404).json({
-          status: "not_found",
           message: "No record found with provided code",
         });
       }
@@ -51,7 +50,6 @@ export const linksValidation = async (
 
     // Other unexpected errors
     return res.status(500).json({
-      status: "error",
       message: "Internal server error",
     });
   }

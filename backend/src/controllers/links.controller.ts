@@ -12,7 +12,9 @@ export const postController = async (req: CustomRequest, res: Response) => {
   const { target_url, code } = req.postBody! || {};
   const result = await postService({ target_url, code });
   if (!result.success) {
-    return res.status(result.error?.code as number).json(result.error?.message);
+    return res
+      .status(result.error?.code as number)
+      .json({ message: result.error?.message });
   }
   return res.status(201).json(result.message);
 };
@@ -25,7 +27,9 @@ export const getRedirectURLController = async (
   const { code } = req.getOrDeletePath! || {};
   const result = await getRedirectURL({ code });
   if (!result.success) {
-    return res.status(result.error?.code as number).json(result.error?.message);
+    return res
+      .status(result.error?.code as number)
+      .json({ message: result.error?.message });
   }
   return res.redirect(302, result.data);
 };
@@ -35,7 +39,9 @@ export const deleteController = async (req: CustomRequest, res: Response) => {
   const { code } = req.getOrDeletePath! || {};
   const result = await deleteURL({ code });
   if (!result.success) {
-    return res.status(result.error?.code as number).json(result.error?.message);
+    return res
+      .status(result.error?.code as number)
+      .json({ message: result.error?.message });
   }
   return res.status(200).json(result.message);
 };
@@ -44,7 +50,9 @@ export const deleteController = async (req: CustomRequest, res: Response) => {
 export const getLinksController = async (req: CustomRequest, res: Response) => {
   const result = await getLinks();
   if (!result.success) {
-    return res.status(result.error?.code as number).json(result.error?.message);
+    return res
+      .status(result.error?.code as number)
+      .json({ message: result.error?.message });
   }
   return res.status(200).json(result.data);
 };
