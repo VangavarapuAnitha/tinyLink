@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { pool } from "./db";
 import links from "./routes/links.route";
+import redirect from "./routes/redirect.route";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.get("/healthz", (req, res) => {
 
 // Links
 app.use("/api/links", links);
+app.use("/api/redirect", redirect);
 
 //Connect DB, then start the server
 pool

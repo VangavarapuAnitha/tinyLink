@@ -1,8 +1,8 @@
 import {
   postService,
-  getRedirectURL,
   deleteURL,
   getLinks,
+  stats,
 } from "../services/links.service";
 import { CustomRequest } from "../types/links.type";
 import { Response } from "express";
@@ -19,19 +19,16 @@ export const postController = async (req: CustomRequest, res: Response) => {
   return res.status(201).json(result.message);
 };
 
-//Controller for get redirect url
-export const getRedirectURLController = async (
-  req: CustomRequest,
-  res: Response
-) => {
+// COntroller for stats
+export const statsController = async (req: CustomRequest, res: Response) => {
   const { code } = req.getOrDeletePath! || {};
-  const result = await getRedirectURL({ code });
+  const result = await stats({ code });
   if (!result.success) {
     return res
       .status(result.error?.code as number)
       .json({ message: result.error?.message });
   }
-  return res.redirect(302, result.data);
+  return res.status(200).json(result.data);
 };
 
 // Controller for delete url with code
