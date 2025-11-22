@@ -19,7 +19,7 @@ app.get("/healthz", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-// Links
+//Routes
 app.use("/api/links", links);
 app.use("/api/redirect", redirect);
 

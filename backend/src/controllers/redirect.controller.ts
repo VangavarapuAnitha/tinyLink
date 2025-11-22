@@ -8,11 +8,13 @@ export const getRedirectURLController = async (
   res: Response
 ) => {
   const { code } = req.getOrDeletePath! || {};
+  //Call service to ger redirect URL
   const result = await getRedirectURL({ code });
   if (!result.success) {
     return res
       .status(result.error?.code as number)
       .json({ message: result.error?.message });
   }
+
   return res.redirect(302, result.data);
 };

@@ -4,6 +4,7 @@ import { getOrDeleteSchema, postSchema } from "../schemas/links.schema";
 import Joi from "joi";
 import { pool } from "../db";
 
+// Middlewares
 export const linksValidation = async (
   req: CustomRequest,
   res: Response,
@@ -39,7 +40,6 @@ export const linksValidation = async (
     // Joi validation error
     if (error.isJoi) {
       return res.status(400).json({
-        status: "validation_error",
         message: "Invalid input data",
         errors: error.details.map((err: Joi.ValidationErrorItem) => ({
           field: err.path.join("."),
