@@ -22,7 +22,8 @@ const Stats = () => {
             <strong>Total Clicks:</strong> {stats.clicks}
           </p>
           <p>
-            <strong>Last Clicked:</strong> {stats.last_clicked || "Never"}
+            <strong>Last Clicked:</strong>{" "}
+            {new Date(stats.last_clicked as string).toLocaleString() || "Never"}
           </p>
           <p>
             <strong>Created At:</strong>{" "}

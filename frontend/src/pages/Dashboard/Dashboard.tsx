@@ -54,7 +54,9 @@ const Dashboard = () => {
                         {item.clicks}
                       </td>
                       <td className="p-2 border-b border-gray-200 text-center">
-                        {item.last_clicked || "—"}
+                        {new Date(
+                          item.last_clicked as string
+                        ).toLocaleString() || "—"}
                       </td>
                       <td className="p-2 border-b border-gray-200 space-x-2 text-center">
                         <Link
