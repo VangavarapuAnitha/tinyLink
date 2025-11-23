@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Urls } from "../../utils/Urls.util";
+import { Urls } from "../../utils/tem";
 import axios from "axios";
 import { toast } from "react-toastify";
 

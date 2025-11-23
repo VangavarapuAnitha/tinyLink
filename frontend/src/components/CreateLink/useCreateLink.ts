@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { generateCode } from "../../utils/generateCode";
 import type { CreateLinkProps } from "./CreateLink";
-import { Urls } from "../../utils/Urls.util";
+import { Urls } from "../../utils/tem";
 
 interface UseCreateLinkProps {
   postSubmit: CreateLinkProps["postSubmit"];
