@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Urls } from "../../utils/tem";
+import { Urls } from "../../utils/Urls.util";
 
 export interface StatsType {
   code: string;
