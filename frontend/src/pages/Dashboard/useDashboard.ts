@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-
+import { Urls } from "../../utils/Urls.util";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -9,17 +9,19 @@ interface LinkType {
   clicks: number;
   last_clicked: string | null;
 }
+
+//Talon for Dashboard
 export const useDashboard = () => {
   const [links, setLinks] = useState<LinkType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [openForm, setOpenForm] = useState<boolean>(false);
-  const API = import.meta.env.VITE_API_URL;
 
   // Fetch all links
   const fetchLinks = async () => {
     try {
       setLoading(true);
-      const res = await axios.get<LinkType[]>(`${API}/links`);
+      const url = Urls.links();
+      const res = await axios.get<LinkType[]>(url);
       setLinks(res.data);
     } catch (err: any) {
       console.log(err);
@@ -28,18 +30,22 @@ export const useDashboard = () => {
     }
   };
 
+  // Fetch links on mount
   useEffect(() => {
     fetchLinks();
   }, []);
 
+  //Post submit after adding
   const postSubmit = useCallback(() => {
     setOpenForm(false);
     fetchLinks();
   }, [setOpenForm, fetchLinks]);
 
+  // Delete URL
   const handleDelete = async (code: string) => {
     try {
-      await axios.delete(`${API}/links/${code}`);
+      const url = Urls.RDLink(code);
+      await axios.delete(url);
       toast.success("Deleted!");
       fetchLinks();
     } catch (error) {

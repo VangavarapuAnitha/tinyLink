@@ -21,7 +21,8 @@ app.get("/healthz", (req, res) => {
 
 //Routes
 app.use("/api/links", links);
-app.use("/api/redirect", redirect);
+// Redirect url
+app.use("/", redirect);
 
 //Connect DB, then start the server
 pool
